@@ -1,0 +1,147 @@
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700,900&display=swap">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono&effect=outline" rel="stylesheet" type="text/css"> 
+	<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
+
+	<link rel="stylesheet" href="css/app.css" type="text/css" />
+</head>
+<style>
+	body { 
+		background-color: rgba(0, 0, 0, 0); 
+		margin: 0px auto; 
+		overflow: hidden; 
+		font-size: 13px;
+		color: #AFAFAF;
+	}
+
+	.Blink {
+		animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+	}
+
+	@keyframes blinker {  
+		from { opacity: 1; }
+		to { opacity: 0; }
+	}
+
+	.container{
+		width: 100wh;
+		height: 100vh;
+	}
+
+    #dial {
+      position: absolute;
+      left: 475px;
+      bottom: 70px;
+      width: 150px;
+      height: 150px;
+      background-image: url('dial.png');
+      background-size: contain;
+    }
+
+    #arm {
+      position: absolute;
+      left: 460px;
+      bottom: 55px;
+      width: 180px;
+      height: 180px;
+      background-image: url('arm.png');
+      background-size: contain;
+    }
+</style>
+<body>
+		<div class="info vehicle inactive animated">
+			<div id="speedometer">
+				<div id="progress-speed">
+					<svg viewBox="0 0 100 100">
+						<circle cx="50" cy="50" r="45" class="mask" />
+						<circle cx="50" cy="50" r="45" class="speed" />
+						<defs>
+							<linearGradient id="speed-gradient">
+								<stop offset="0%" stop-color="red"/>
+								<stop offset="75%" stop-color="white"/>
+								<stop offset="100%" stop-color="white"/>
+							</linearGradient>
+						</defs>
+					</svg>
+					<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="border" /></svg>
+				</div>
+				<div id="vehicle-speed">
+					<span>999</span>
+					<strong>MP/H</strong>
+				</div>
+				<div id="progress-rpm">
+					<svg viewBox="0 0 100 100">
+						<circle cx="50" cy="50" r="45" class="mask" />
+						<circle cx="50" cy="50" r="45" class="rpm" />
+						<defs>
+							<linearGradient id="rpm-gradient">
+								<stop offset="0%" stop-color="#ff0000"/>
+								<stop offset="75%" stop-color="#ffee00"/>
+								<stop offset="100%" stop-color="#10dea3"/>
+							</linearGradient>
+						</defs>
+					</svg>
+					<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="border" /></svg>
+				</div>
+				<div id="vehicle-rpm">
+					<span>000000</span>
+					<strong>RPM</strong>
+				</div>
+				<div id="vehicle-gear" class="icon text"><i><img src="img/vehicle-gear.png"></i><span>N</span></div>
+				<div id="vehicle-status-left">
+					<div  id="KM">
+						<span>0000</span><strong></strong>
+					</div>
+					<ul>
+						<!--
+						<li class="icon off" id="seatbelt"><i><img src="img/vehicle-seatbelt.png"></i><span style="height: 100%"></span></li>
+						<li class="icon" id="fuel"><i class="fas fa-gas-pump"></i><span></span></li>
+						<li class="icon" id="damage"><i class="fas fa-wrench"></i><span></span></li>
+						-->
+						<li class="icon" id="nitro"><i class="fas fa-rocket"></i><span style="height: 100%"></span></li> <!--fab fa-free-code-camp  fas fa-tint -->
+					</ul>
+				</div>
+				<div id="vehicle-status-right">
+					<ul>
+						<li class="icon normal" id="lights"><i><img src="img/vehicle-lights.png"></i><span></span></li>
+						<li class="icon" id="signals" class="off"><i class="fas fa-arrows-alt-h"></i><span style="height: 100%"></span></li>
+						<li class="icon" id="seatbelt"><i><img src="img/vehicle-seatbelt.png"></i><span style="height: 100%"></span></li>	
+						<li class="icon" id="fuel"><i class="fas fa-gas-pump"></i><span></span></li>	
+						<li class="icon" id="damage"><i class="fas fa-wrench"></i><span></span></li>
+					</ul>
+				</div>
+			</div>
+			<!--<div id="location">
+				<span>Los Santos</span>
+			</div>-->
+		</div>
+	<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+	<script src="scripts/app.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/cferdinandi/saferInnerHTML@1/dist/saferInnerHTML.polyfills.min.js"></script>
+
+
+	<canvas id="dial"></canvas>
+  	<canvas id="arm"></canvas>
+	<script>
+		SetArm = function(boost) {
+		  var c = document.getElementById("arm");
+		  c.style.transform = "rotate("+(boost*180.0)+"deg)";
+		}
+	
+		window.addEventListener('message', function(event) {
+		  if (event.data.type == "display") {
+			document.body.style.display = (event.data.display == true ? "block" : "none");
+		  } else if (event.data.type == "set") {
+			SetArm(event.data.boost);
+		  }
+		})
+	  </script>
+	
+</body>
+</html>
